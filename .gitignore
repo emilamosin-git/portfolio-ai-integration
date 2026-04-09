@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# environment variables — NEVER commit these
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE & local tool settings
+.vscode/
+.idea/
+.claude/
+
+# TypeScript build cache
+tsconfig.tsbuildinfo
+
+# logs
+*.log
+npm-debug.log*
