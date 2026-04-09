@@ -3,7 +3,7 @@ import { groq } from '@ai-sdk/groq'
 import { openai } from '@ai-sdk/openai'
 import { SYSTEM_PROMPT } from '@/lib/prompt'
 
-export const runtime = 'nodejs'
+export const runtime = 'edge'
 
 export async function POST(req: Request) {
   const { messages } = await req.json()
