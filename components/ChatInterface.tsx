@@ -136,7 +136,7 @@ export default function ChatInterface() {
                   Emil Amosin
                 </p>
                 <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.3 }}>
-                  Systems Support Specialist · ShiftMarkets
+                  System Trading Specialist · ShiftMarkets
                 </p>
               </div>
             </motion.div>
@@ -219,7 +219,7 @@ export default function ChatInterface() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.28, type: 'spring', stiffness: 180, damping: 22 }}
               >
-                Systems Support Specialist &amp; Internal Tools Developer at ShiftMarkets
+                System Trading Specialist &amp; Internal Tools Developer at ShiftMarkets
               </motion.p>
 
               <motion.div
