@@ -219,27 +219,27 @@ Emil has built web applications with polished, production-quality UIs:
 - Parses raw email bodies to extract per-symbol P/L values, then diffs the current snapshot against the previous one.
 - Posts a Slack alert when any symbol drops by $50+ (configurable), with team mention notifications. Also alerts on significant increases ($500+ threshold).
 - **Threaded worsening updates:** If a drop worsens further, it posts a threaded reply under the original alert rather than spamming the channel — showing cumulative drop from baseline.
-- **Auto-resolve:** When a symbol's P/L recovers to or above its baseline, it updates the original Slack message to `[RESOLVED]` with recovery details. Posts a fallback message if the edit fails.
+- **Auto-resolve:** When a symbol's P/L recovers to or above its baseline, it updates the original Slack message to [RESOLVED] with recovery details. Posts a fallback message if the edit fails.
 - **Deduplication:** Uses ScriptProperties to track which email has already been processed per label per date — never double-alerts.
 - **Quiet window:** Skips PNL processing entirely between 00:00–02:30 UTC to avoid noise during off-hours reporting cycles.
 
 **2 — Operational Keyword Watchdog:**
 - Monitors a designated Slack channel for 17 critical operational confirmation messages across 5 brands — things like "No NEXUS Hedging Counter Alerts", "Nexus Crypto_Com Rec Complete", "No OUINEX Residual Alerts", etc.
-- Uses `RegExp`-based matching (with proper regex escaping) across full message text, blocks, and attachments.
+- Uses RegExp-based matching (with proper regex escaping) across full message text, blocks, and attachments.
 - If any keyword goes unseen for 65+ minutes, it posts a consolidated stale-keywords alert with human-readable "last seen" timestamps and mentions the responsible users.
 - Ignores its own bot messages and configurable bot IDs to prevent self-triggering alert loops.
 
 **3 — Health Check Failure Tracker:**
 - Watches a Slack channel for "health check failure" messages from external monitoring systems.
 - Parses structured failure messages to extract the environment URL, client name, and error details — handles multi-environment failure blocks, nested bullet formats, and noisy boilerplate text.
-- Deduplicates incidents using SHA-256 hashing of `env + error` — so the same failure doesn't trigger duplicate alerts even if the message appears multiple times.
+- Deduplicates incidents using SHA-256 hashing of env + error — so the same failure doesn't trigger duplicate alerts even if the message appears multiple times.
 - Posts a clean, structured Slack alert for each unique environment failure the first time it's detected.
-- **Auto-resolve:** If a tracked incident hasn't been seen in 2 hours, it edits the original alert message to `[RESOLVED]` — no manual intervention needed.
+- **Auto-resolve:** If a tracked incident hasn't been seen in 2 hours, it edits the original alert message to [RESOLVED] — no manual intervention needed.
 
 **Notable engineering details:**
-- State persistence via Google Apps Script `PropertiesService` — survives restarts, stores pointers for drop baselines, last-notified values, Slack thread timestamps, and health check incident hashes.
-- SHA-256 fingerprinting for incident identity using `Utilities.computeDigest` (no external dependencies).
-- Self-identification via `auth.test` to filter own bot messages from channel history, cached in properties.
+- State persistence via Google Apps Script PropertiesService — survives restarts, stores pointers for drop baselines, last-notified values, Slack thread timestamps, and health check incident hashes.
+- SHA-256 fingerprinting for incident identity using Utilities.computeDigest (no external dependencies).
+- Self-identification via auth.test to filter own bot messages from channel history, cached in properties.
 - Handles edge cases: inverse mentions for resolved alerts, stale "count-of-environments" placeholder names corrected in subsequent runs, consecutive duplicate line deduplication in error text cleanup.
 
 **Impact:** Replaces what would otherwise be manual log-watching and email scanning for dozens of financial symbols and environments across multiple brands. The team gets noise-filtered, auto-resolved, threaded Slack alerts instead of raw data dumps — so action is taken on what matters, not buried in volume.
