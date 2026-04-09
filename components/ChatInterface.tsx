@@ -12,10 +12,10 @@ import MouseEffects from './MouseEffects'
 type AvatarState = 'idle' | 'thinking' | 'happy'
 
 const CHIPS = [
+  'List all of your Projects',
   'Show me your best projects',
   'What tools do you use?',
   'How can we collaborate?',
-  'Tell me a fun fact about Emil',
 ]
 
 function getMessageText(msg: UIMessage): string {
